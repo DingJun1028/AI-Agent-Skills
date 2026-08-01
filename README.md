@@ -1,136 +1,367 @@
-# 01 · Core Cognitive Skills
+<div align="center">
 
-## Overview
+# 🧠⚡ AI-Agent-Skills
 
-Core cognitive skills are the foundational abilities every AI agent needs
-before it can reliably use tools, talk to other agents, or operate in
-production: **reasoning** (how it thinks through a problem), **planning**
-(how it breaks work into steps), and **memory** (how it retains and reuses
-information). Everything else in this repository — tool use, multi-agent
-coordination, RAG, evaluation — is built on top of these primitives. Get
-these wrong and no amount of tooling will fix an agent that can't reason
-about what to do next.
+### The open-source knowledge base for designing, building, evaluating, and deploying AI agents
 
-## What is an agent?
+**Not a library. A map of the entire field.**
 
-An **AI agent** is a system that uses a language model as a reasoning engine
-to perceive some state of the world, decide on an action, execute it (often
-via tools), observe the result, and repeat — pursuing a goal with some
-degree of autonomy, rather than producing a single one-shot response.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Content License: CC BY 4.0](https://img.shields.io/badge/Content-CC%20BY%204.0-blue.svg?style=for-the-badge)](docs/content-license.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
+[![Status](https://img.shields.io/badge/status-actively%20expanding-orange.svg?style=for-the-badge)](ROADMAP.md)
+
+![Categories](https://img.shields.io/badge/categories-20-8A2BE2?style=flat-square)
+![Pages](https://img.shields.io/badge/pages-68+-8A2BE2?style=flat-square)
+![Diagrams](https://img.shields.io/badge/mermaid%20diagrams-40+-8A2BE2?style=flat-square)
+![Words](https://img.shields.io/badge/words-42k+-8A2BE2?style=flat-square)
+
+<br/>
+
+**[📚 Skill Catalog](SKILL_CATALOG.md)** · **[🗺️ Roadmap](ROADMAP.md)** · **[📖 Glossary](glossary/README.md)** · **[🤝 Contributing](CONTRIBUTING.md)**
+
+</div>
+
+<br/>
+
+> Awesome Lists + Papers with Code + a vendor-neutral AI engineering handbook — **combined into one repo.**
+
+`AI-Agent-Skills` teaches everything required to **design, build, evaluate,
+deploy, and improve AI agents** — from first-principles cognition (reasoning,
+planning, memory) all the way up through production concerns (observability,
+evaluation, deployment). Every page is diagrammed, cross-linked, and backed
+by real citations. No "coming soon." No fluff.
+
+---
+
+## 🧭 Who this is for
+
+<table>
+<tr>
+<td width="20%" align="center">🟢<br/><b>Beginner</b></td>
+<td>Never built an agent before → <a href="#-beginner-learning-path">Beginner Learning Path</a></td>
+</tr>
+<tr>
+<td align="center">🛠️<br/><b>AI Engineer</b></td>
+<td>Shipping a product → <a href="SKILL_CATALOG.md">Skill Catalog</a> → pick a <a href="18-workflows/README.md">workflow</a></td>
+</tr>
+<tr>
+<td align="center">🔬<br/><b>Researcher</b></td>
+<td>Want primary sources → <a href="papers/README.md">papers/</a>, <a href="13-agent-patterns/README.md">agent patterns</a></td>
+</tr>
+<tr>
+<td align="center">🏢<br/><b>Enterprise / Platform Team</b></td>
+<td><a href="16-deployment/README.md">deployment</a>, <a href="07-safety-alignment/README.md">safety</a>, <a href="14-observability/README.md">observability</a></td>
+</tr>
+<tr>
+<td align="center">🎓<br/><b>Student</b></td>
+<td>Learning the field deeply → <a href="#-advanced-learning-path">Advanced Learning Path</a></td>
+</tr>
+<tr>
+<td align="center">✍️<br/><b>Contributor</b></td>
+<td>Want to help build this → <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> + <a href="ROADMAP.md">ROADMAP.md</a></td>
+</tr>
+</table>
+
+---
+
+## 🏗️ How the Repository Is Organized
+
+```mermaid
+flowchart TD
+    A["🧠 01 · Core Cognitive<br/>reasoning · planning · memory"] --> B["🔧 02 · Tool Use"]
+    A --> C["⚖️ 04 · Decision Making"]
+    B --> D["🔌 11 · MCP"]
+    B --> E["📚 10 · RAG"]
+    A --> F["🎯 13 · Agent Patterns<br/>ReAct · Reflexion · Plan-and-Execute"]
+    F --> G["🤝 06 · Multi-Agent Systems"]
+    C --> H["🛡️ 07 · Safety & Alignment"]
+    G --> H
+    E --> I["💾 12 · Memory Systems"]
+    F --> J["🎨 05 · Domain Skills"]
+    J --> K["⚙️ 18 · Workflows"]
+    G --> K
+    K --> L["👁️ 14 · Observability"]
+    K --> M["📊 15 · Evaluation"]
+    L --> N["🚀 16 · Deployment"]
+    M --> N
+    N --> O["📁 20 · Case Studies"]
+
+    style A fill:#4C6EF5,color:#fff,stroke:#364FC7,stroke-width:2px
+    style F fill:#4C6EF5,color:#fff,stroke:#364FC7,stroke-width:2px
+    style H fill:#F03E3E,color:#fff,stroke:#C92A2A,stroke-width:2px
+    style N fill:#37B24D,color:#fff,stroke:#2B8A3E,stroke-width:2px
+    style O fill:#37B24D,color:#fff,stroke:#2B8A3E,stroke-width:2px
+```
+
+---
+
+## ⚙️ See It In Action — Real Agent Workflows
+
+These are complete, worked architectures from [`18-workflows/`](18-workflows/README.md),
+showing how the primitives in this repo combine into real systems.
+
+<details open>
+<summary><b>🎧 Customer Support Agent</b> — RAG + tool use + escalation</summary>
+
+```mermaid
+flowchart TD
+    Query([💬 Customer Query]) --> Retrieve[📚 Retrieve relevant help docs]
+    Query --> Lookup[🔧 Tool: account / order lookup]
+    Retrieve --> Reason{🧠 Reason over context}
+    Lookup --> Reason
+    Reason --> Conf{Confident<br/>+ within authority?}
+    Conf -->|✅ Yes| Respond([Respond / take action])
+    Conf -->|❌ No| Escalate([🙋 Escalate to human])
+
+    style Query fill:#4C6EF5,color:#fff
+    style Respond fill:#37B24D,color:#fff
+    style Escalate fill:#F59F00,color:#fff
+```
+
+→ [`10-rag/`](10-rag/README.md) · [`02-tool-use/`](02-tool-use/README.md) · [`04-decision-making/`](04-decision-making/README.md#fallback-strategies)
+</details>
+
+<details>
+<summary><b>🔬 Research Agent</b> — plan, retrieve, synthesize, cite</summary>
 
 ```mermaid
 flowchart LR
-    G[Goal / Task] --> P[Perceive]
-    P --> R[Reason]
-    R --> D{Decide: act or respond?}
-    D -->|Act| A[Act via Tool]
-    A --> O[Observe Result]
-    O --> P
-    D -->|Respond| F[Final Answer]
+    Goal([🎯 Research Goal]) --> Plan[📋 Plan-and-Execute]
+    Plan --> S1[Source 1] & S2[Source 2] & S3[Source 3]
+    S1 --> Synth[🧬 Synthesize + cross-check]
+    S2 --> Synth
+    S3 --> Synth
+    Synth --> Ground{Grounded in sources?}
+    Ground -->|✅| Report([📄 Cited Report])
+    Ground -->|❌| Synth
 
-    style G fill:#4C6EF5,color:#fff
-    style F fill:#37B24D,color:#fff
+    style Goal fill:#4C6EF5,color:#fff
+    style Report fill:#37B24D,color:#fff
 ```
 
-The three defining properties of an agent (versus a plain chatbot):
+→ [`13-agent-patterns/plan-and-execute.md`](13-agent-patterns/plan-and-execute.md) · [`10-rag/`](10-rag/README.md)
+</details>
 
-| Property | Plain chatbot | Agent |
-|---|---|---|
-| Turns | Single request → single response | Multi-step loop until goal is met or budget runs out |
-| Environment interaction | None (text only) | Reads/writes external state via tools |
-| Autonomy | Human decides every next step | Agent decides its own next step(s), within guardrails |
+<details>
+<summary><b>💻 Coding Agent</b> — write, run, reflect, repeat</summary>
 
-## Learning Objectives
+```mermaid
+flowchart TD
+    Task([🎯 Coding Task]) --> Decompose[📋 Task Decomposition]
+    Decompose --> Write[⌨️ Generate code — CodeAct]
+    Write --> Run[▶️ Execute in sandbox]
+    Run --> Test{Tests pass?}
+    Test -->|✅| Done([✅ Done])
+    Test -->|❌| Reflect[🔄 Reflect on failure]
+    Reflect --> Write
 
-By the end of this category, you should be able to:
+    style Task fill:#4C6EF5,color:#fff
+    style Done fill:#37B24D,color:#fff
+    style Reflect fill:#F59F00,color:#fff
+```
 
-- Explain the difference between reasoning strategies (CoT, ToT, GoT) and
-  know when each is worth its extra cost
-- Distinguish self-reflection from self-correction and know where each fits
-  in an agent loop
-- Decompose a complex task into a plan an agent can execute step-by-step
-- Explain the difference between working, episodic, semantic, and long-term
-  memory, and why an agent needs more than just a long context window
+→ [`13-agent-patterns/codeact.md`](13-agent-patterns/codeact.md) · [`13-agent-patterns/reflexion.md`](13-agent-patterns/reflexion.md)
+</details>
 
-## Pages in this category
+<details>
+<summary><b>🤝 Multi-Agent Research Team</b> — supervisor + specialized workers</summary>
 
-| Page | Description | Status |
-|---|---|---|
-| [`reasoning/chain-of-thought.md`](reasoning/chain-of-thought.md) | Step-by-step reasoning before an answer | 🟢 |
-| [`reasoning/tree-of-thought.md`](reasoning/tree-of-thought.md) | Exploring multiple reasoning branches | 🟢 |
-| [`reasoning/graph-of-thought.md`](reasoning/graph-of-thought.md) | Non-linear, mergeable reasoning graphs | 🟢 |
-| [`reasoning/self-reflection.md`](reasoning/self-reflection.md) | Self-reflection and self-correction loops | 🟢 |
-| [`planning/task-decomposition.md`](planning/task-decomposition.md) | Breaking goals into executable sub-tasks | 🟢 |
-| [`planning/README.md`](planning/README.md) | Planning strategies overview (hierarchical, reactive, plan-and-execute) | 🟢 |
-| [`memory/README.md`](memory/README.md) | Working, long-term, semantic, episodic memory, and compression | 🟢 |
+```mermaid
+flowchart TD
+    Sup([🧑‍💼 Supervisor]) --> W1[🔍 Worker: Research]
+    Sup --> W2[✍️ Worker: Writing]
+    Sup --> W3[✅ Worker: Fact-checking]
+    W1 --> Sup
+    W2 --> Sup
+    W3 --> Sup
+    Sup --> Final([📦 Synthesized Result])
 
-## How this fits into the bigger picture
+    style Sup fill:#4C6EF5,color:#fff
+    style Final fill:#37B24D,color:#fff
+```
+
+→ [`06-multi-agent/`](06-multi-agent/README.md#supervisor-pattern)
+</details>
+
+<details>
+<summary><b>🛡️ Safe Tool Execution</b> — guardrails + human approval</summary>
+
+```mermaid
+flowchart TD
+    Action([🤖 Agent proposes action]) --> Risk{Risk level?}
+    Risk -->|🟢 Read-only / reversible| Auto([⚡ Execute automatically])
+    Risk -->|🔴 Destructive / irreversible| Approve[🙋 Require human approval]
+    Approve --> Human{Approved?}
+    Human -->|✅ Yes| Execute([Execute])
+    Human -->|❌ No| Cancel([Cancel])
+
+    style Action fill:#4C6EF5,color:#fff
+    style Auto fill:#37B24D,color:#fff
+    style Execute fill:#37B24D,color:#fff
+    style Cancel fill:#F03E3E,color:#fff
+```
+
+→ [`07-safety-alignment/`](07-safety-alignment/README.md#human-approval)
+</details>
+
+<details>
+<summary><b>📚 RAG Pipeline</b> — from raw docs to grounded answer</summary>
 
 ```mermaid
 flowchart LR
-    Core["01 · Core Cognitive<br/>reasoning · planning · memory"] --> Tools["02 · Tool Use"]
-    Core --> Decide["04 · Decision Making"]
-    Core --> Patterns["13 · Agent Patterns"]
-    Patterns --> Multi["06 · Multi-Agent Systems"]
+    Docs[(📄 Raw Docs)] --> Chunk[✂️ Chunking]
+    Chunk --> Embed[🔢 Embeddings]
+    Embed --> Index[(🗂️ Vector DB)]
+    Q([❓ Query]) --> QE[🔢 Embed Query]
+    QE --> Search[🔍 Similarity Search]
+    Index --> Search
+    Search --> Rerank[📊 Rerank]
+    Rerank --> Gen[🧠 Generate]
+    Q --> Gen
+    Gen --> A([✅ Grounded Answer])
+
+    style Docs fill:#4C6EF5,color:#fff
+    style A fill:#37B24D,color:#fff
 ```
 
-Reasoning and planning techniques described here are the building blocks used
-by the concrete, named patterns in [`13-agent-patterns/`](../13-agent-patterns/README.md)
-(e.g. ReAct combines reasoning + acting; Plan-and-Execute is planning made
-explicit as an architecture).
+→ [`10-rag/README.md`](10-rag/README.md)
+</details>
 
-## Key Concepts
+---
 
-| Term | Definition |
+## 📂 Full Directory Index
+
+| # | Folder | What's inside | Status |
+|---|---|---|:---:|
+| 01 | [`01-core-cognitive/`](01-core-cognitive/README.md) | Reasoning (CoT, ToT, GoT), planning, task decomposition, memory foundations | 🟢 |
+| 02 | [`02-tool-use/`](02-tool-use/README.md) | Function calling, web search, browser automation, API/DB/CLI/code execution, file systems | 🟡 |
+| 03 | [`03-communication/`](03-communication/README.md) | Summarization, translation, conversation state, prompt engineering, structured outputs | 🟡 |
+| 04 | [`04-decision-making/`](04-decision-making/README.md) | Risk analysis, confidence estimation, fallback strategies, hallucination detection, verification | 🟡 |
+| 05 | [`05-domain-skills/`](05-domain-skills/README.md) | Coding, writing, research, finance, medicine, education, math, creative, vision/speech/video | 🟡 |
+| 06 | [`06-multi-agent/`](06-multi-agent/README.md) | Agent communication, delegation, supervisor/swarm/debate/critic/manager-worker | 🟡 |
+| 07 | [`07-safety-alignment/`](07-safety-alignment/README.md) | Guardrails, prompt injection, jailbreaks, permissions, auth, human approval | 🟡 |
+| 08 | [`08-learning-adaptation/`](08-learning-adaptation/README.md) | Few-shot, in-context learning, feedback loops, knowledge updating | 🟡 |
+| 09 | [`09-integrations/`](09-integrations/README.md) | Vendor-neutral integration patterns for external systems | 🟡 |
+| 10 | [`10-rag/`](10-rag/README.md) | Chunking, embeddings, retrieval, hybrid search, GraphRAG, CRAG, Self-RAG, reranking, vector DBs | 🟢 |
+| 11 | [`11-mcp/`](11-mcp/README.md) | Model Context Protocol — spec, clients, servers, tools/resources/prompts, auth, transport | 🟢 |
+| 12 | [`12-memory/`](12-memory/README.md) | Applied memory systems for production agents (builds on 01) | 🟡 |
+| 13 | [`13-agent-patterns/`](13-agent-patterns/README.md) | ReAct, Reflexion, Self-Discover, Plan-and-Execute, CodeAct, Voyager | 🟢 |
+| 14 | [`14-observability/`](14-observability/README.md) | Tracing, telemetry, metrics, logging, monitoring | 🟡 |
+| 15 | [`15-evaluation/`](15-evaluation/README.md) | LLM-as-a-judge, benchmarks, latency/cost/quality tradeoffs | 🟡 |
+| 16 | [`16-deployment/`](16-deployment/README.md) | Docker, Kubernetes, cloud, edge, serverless | 🟡 |
+| 17 | [`17-models/`](17-models/README.md) | OpenAI, Anthropic, Gemini, Mistral, Llama, Qwen, DeepSeek, open-source | 🟡 |
+| 18 | [`18-workflows/`](18-workflows/README.md) | Customer support, research agent, coding agent, email, browser, data analyst, recruiter, legal, medical | 🟡 |
+| 19 | [`19-recipes/`](19-recipes/README.md) | Short, task-oriented cookbook entries | 🟡 |
+| 20 | [`20-case-studies/`](20-case-studies/README.md) | Enterprise AI, coding assistants, autonomous agents, customer service, research automation | 🟡 |
+| — | [`papers/`](papers/README.md) | Curated, categorized bibliography of foundational papers | 🟡 |
+| — | [`resources/`](resources/README.md) | Tools, courses, communities, newsletters | 🟡 |
+| — | [`glossary/`](glossary/README.md) | Alphabetical glossary of agent-engineering terms | 🟡 |
+| — | [`docs/`](docs/README.md) | Style guide, templates, meta-documentation | 🟢 |
+| — | [`examples/`](examples/README.md) | Index of runnable, minimal educational snippets | 🟡 |
+
+*(🟢 = full depth, 🟡 = solid overview with sub-pages expanding — see [`ROADMAP.md`](ROADMAP.md) for live tracking)*
+
+---
+
+## 🟢 Beginner Learning Path
+
+```mermaid
+flowchart LR
+    S1["1️⃣ What is<br/>an agent?"] --> S2["2️⃣ Chain of<br/>Thought"]
+    S2 --> S3["3️⃣ Task<br/>Decomposition"]
+    S3 --> S4["4️⃣ Tool Use"]
+    S4 --> S5["5️⃣ ReAct"]
+    S5 --> S6["6️⃣ Minimal<br/>RAG"]
+    S6 --> S7["7️⃣ Basic<br/>Guardrails"]
+    S7 --> S8["8️⃣ First<br/>Workflow"]
+
+    style S1 fill:#4C6EF5,color:#fff
+    style S8 fill:#37B24D,color:#fff
+```
+
+1. [What is an AI agent?](01-core-cognitive/README.md#what-is-an-agent)
+2. [Chain of Thought reasoning](01-core-cognitive/reasoning/chain-of-thought.md)
+3. [Task decomposition & planning](01-core-cognitive/planning/task-decomposition.md)
+4. [Tool use & function calling](02-tool-use/README.md#function-calling)
+5. [ReAct pattern](13-agent-patterns/react.md)
+6. [Your first RAG pipeline](10-rag/README.md#a-minimal-rag-pipeline)
+7. [Basic guardrails](07-safety-alignment/README.md#guardrails)
+8. [Your first workflow](18-workflows/README.md)
+
+## 🔴 Advanced Learning Path
+
+```mermaid
+flowchart LR
+    A1["1️⃣ ToT / GoT"] --> A2["2️⃣ Reflexion"]
+    A2 --> A3["3️⃣ MCP<br/>deep dive"]
+    A3 --> A4["4️⃣ GraphRAG /<br/>CRAG / Self-RAG"]
+    A4 --> A5["5️⃣ Multi-Agent<br/>Patterns"]
+    A5 --> A6["6️⃣ CodeAct /<br/>Voyager"]
+    A6 --> A7["7️⃣ Observability<br/>+ Evaluation"]
+    A7 --> A8["8️⃣ Deploy<br/>at Scale"]
+    A8 --> A9["9️⃣ Case<br/>Studies"]
+
+    style A1 fill:#F03E3E,color:#fff
+    style A9 fill:#37B24D,color:#fff
+```
+
+1. [Tree of Thought / Graph of Thought](01-core-cognitive/reasoning/tree-of-thought.md)
+2. [Self-Reflection & Reflexion](13-agent-patterns/reflexion.md)
+3. [Model Context Protocol deep dive](11-mcp/README.md)
+4. [Advanced RAG: GraphRAG, CRAG, Self-RAG](10-rag/advanced-rag.md)
+5. [Multi-agent supervisor/swarm/debate patterns](06-multi-agent/README.md)
+6. [CodeAct & Voyager](13-agent-patterns/codeact.md)
+7. [Production observability & evaluation](14-observability/README.md), [15-evaluation](15-evaluation/README.md)
+8. [Deployment at scale](16-deployment/README.md)
+9. [Case studies](20-case-studies/README.md)
+
+---
+
+## 🔎 Quick Search Table
+
+Looking for something specific? The [Skill Catalog](SKILL_CATALOG.md) is a flat,
+`Ctrl+F`-friendly index of every technique in the repo with direct links.
+
+| I want to... | Go to |
 |---|---|
-| Reasoning | The process of generating intermediate thoughts/steps before producing a final answer or action |
-| Planning | Producing an ordered (or partially ordered) sequence of sub-goals/steps to achieve a larger goal |
-| Task decomposition | Breaking one complex task into smaller, more tractable sub-tasks |
-| Working memory | Short-term state held within the active context window / scratchpad |
-| Long-term memory | Persisted information retained across sessions, outside the context window |
-| Self-reflection | The agent evaluating its own output or process against a goal or set of criteria |
-| Self-correction | The agent revising its own prior output based on reflection or feedback |
+| 🧠 Understand how LLMs reason step by step | [Chain of Thought](01-core-cognitive/reasoning/chain-of-thought.md) |
+| 🔧 Give my agent tools | [Tool Use](02-tool-use/README.md) |
+| 🔌 Connect my agent to external systems cleanly | [MCP](11-mcp/README.md) |
+| 📚 Ground responses in my own documents | [RAG](10-rag/README.md) |
+| 🤝 Coordinate multiple agents | [Multi-Agent Systems](06-multi-agent/README.md) |
+| 🛡️ Stop my agent from doing something unsafe | [Safety & Alignment](07-safety-alignment/README.md) |
+| 📊 Know if my agent is actually working | [Evaluation](15-evaluation/README.md) |
+| 🚀 Ship this to production | [Deployment](16-deployment/README.md) |
+| 📁 See how others solved this | [Case Studies](20-case-studies/README.md) |
 
-## Advantages / Disadvantages of investing in cognitive skills early
+---
 
-| Advantages | Disadvantages |
+## 🧬 Repository Principles
+
+| | |
 |---|---|
-| Dramatically improves reliability on multi-step tasks | Adds latency and token cost (more reasoning = more generation) |
-| Reduces silent failures (agent "guesses" less) | Harder to debug — reasoning traces can be long and noisy |
-| Transfers across domains — same techniques work for coding, research, support | Diminishing returns past a point; ToT/GoT can over-engineer simple tasks |
-| Forms the foundation every later pattern depends on | Requires careful prompt/architecture design, not just "add more thinking" |
+| 🌐 **Vendor-neutral first** | Concepts are explained generically; provider-specific quirks live in [`17-models/`](17-models/README.md) |
+| 🚫 **No unlabeled anti-patterns** | Insecure or discouraged examples are always marked `# ANTI-PATTERN` |
+| 📖 **Real citations only** | We do not fabricate papers, benchmarks, or stats |
+| 🔗 **Everything cross-linked** | Related Topics sections use relative links, always |
+| 📊 **Diagrams are Mermaid** | Renders natively on GitHub, zero image dependencies |
 
-## Common Mistakes
+## 🤝 Contributing
 
-- **Mistake:** Reaching for Tree of Thought or multi-agent debate on a task
-  that a single Chain of Thought pass would solve. **Fix:** Match reasoning
-  strategy complexity to task difficulty — see the comparison table in
-  [`reasoning/tree-of-thought.md`](reasoning/tree-of-thought.md).
-- **Mistake:** Treating the context window as "memory." **Fix:** Separate
-  working memory (context) from persisted long-term memory — see
-  [`memory/README.md`](memory/README.md).
-- **Mistake:** Skipping planning for tasks with more than ~3 steps, letting
-  the agent improvise step-by-step. **Fix:** Use explicit task decomposition
-  before execution for anything non-trivial — see
-  [`planning/task-decomposition.md`](planning/task-decomposition.md).
-- **Mistake:** Confusing self-reflection (evaluation) with self-correction
-  (revision) and only implementing one. **Fix:** Implement both as distinct
-  steps — see [`reasoning/self-reflection.md`](reasoning/self-reflection.md).
+This repository grows through community contributions. See
+[`CONTRIBUTING.md`](CONTRIBUTING.md) for the style guide, page template, and
+PR process, and [`ROADMAP.md`](ROADMAP.md) for what's currently in progress —
+great first-contribution targets are marked 🟡 or 🔴.
 
-## Related Categories
+## 📄 License
 
-- [`02-tool-use/`](../02-tool-use/README.md) — acting on reasoning/plans
-- [`04-decision-making/`](../04-decision-making/README.md) — confidence, verification, fallback
-- [`13-agent-patterns/`](../13-agent-patterns/README.md) — named architectures built on these primitives
-- [`12-memory/`](../12-memory/README.md) — production-grade applied memory systems
+Code/tooling: [MIT](LICENSE). Prose content: CC BY 4.0 — see
+[`docs/content-license.md`](docs/content-license.md).
 
-## Research Papers
+<div align="center">
+<br/>
 
-- **Chain-of-Thought Prompting Elicits Reasoning in Large Language Models** — Wei et al., 2022. [arXiv:2201.11903](https://arxiv.org/abs/2201.11903)
-- **Tree of Thoughts: Deliberate Problem Solving with Large Language Models** — Yao et al., 2023. [arXiv:2305.10601](https://arxiv.org/abs/2305.10601)
-- **Reflexion: Language Agents with Verbal Reinforcement Learning** — Shinn et al., 2023. [arXiv:2303.11366](https://arxiv.org/abs/2303.11366)
+**⭐ If this repo helps you build better agents, consider starring it.**
 
-## Further Reading
-
-- [`papers/README.md`](../papers/README.md) — full curated bibliography
-- [`glossary/README.md`](../glossary/README.md) — terms used throughout this category
+</div>
