@@ -141,6 +141,16 @@ flowchart TD
 - **AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation** — Wu et al., 2023. [arXiv:2308.08155](https://arxiv.org/abs/2308.08155)
 - **Improving Factuality and Reasoning in Language Models through Multiagent Debate** — Du et al., 2023. [arXiv:2305.14325](https://arxiv.org/abs/2305.14325)
 
+## OA-Team 30 萬能蜂群技能
+
+基於 OA-Team 30 萬能蜂群架構（5T 協定、30 矩陣、協作缺口補齊）的實戰技能包，適用於 ESG-GO / esggo 專案的蜂群式多 agent 協作與部署：
+
+- [oa-team-soul-canon](oa-team-soul-canon/SKILL.md) — 靈魂核心聖典：5T 協定、30 矩陣、協作缺口補齊、AI Station 生產線、電子報、進化路線圖、增量整合模式（設計/對齊層）
+- [oa-team-swarm-ultra](oa-team-swarm-ultra/SKILL.md) — ESG-GO 終極最佳實踐版 30 蜂群
+- [oa-team-crewai-swarm](oa-team-crewai-swarm/SKILL.md) — CrewAI 30 蜂群 JSON-first 建構
+- [oa-team-swarm](oa-team-swarm/SKILL.md) — 通用 30-agent 監控蜂群（環境/收集/分析/報告/協調）
+- [esggo-oa-team-swarm](esggo-oa-team-swarm/SKILL.md) — esggo VPS 部署實戰（SSH 解鎖、agents-cli、cron 投遞、OmniGateway 架構）
+
 ## Further Reading
 
 - [`18-workflows/README.md`](../18-workflows/README.md) — real workflows that use multi-agent coordination
