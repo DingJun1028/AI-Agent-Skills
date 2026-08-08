@@ -101,6 +101,11 @@ lives.
 | [Email Agent Workflow](18-workflows/README.md#email-agent) | Workflows | 🔴 | 🟡 |
 | [Recipes / Cookbook](19-recipes/README.md) | Recipes | 🟡 | 🟡 |
 | [Case Studies](20-case-studies/README.md) | Case Studies | 🟡 | 🟡 |
+| [OA-Team Soul Canon](06-multi-agent/oa-team-soul-canon/SKILL.md) | Multi-Agent | 🔴 | 🟢 |
+| [OA-Team Swarm Ultra](06-multi-agent/oa-team-swarm-ultra/SKILL.md) | Multi-Agent | 🔴 | 🟢 |
+| [OA-Team CrewAI Swarm](06-multi-agent/oa-team-crewai-swarm/SKILL.md) | Multi-Agent | 🔴 | 🟢 |
+| [OA-Team Swarm (monitor)](06-multi-agent/oa-team-swarm/SKILL.md) | Multi-Agent | 🟡 | 🟢 |
+| [esggo OA-Team Swarm](06-multi-agent/esggo-oa-team-swarm/SKILL.md) | Multi-Agent | 🔴 | 🟢 |
 
 > **Note:** Difficulty reflects prerequisite depth, not importance. A 🔴
 > Advanced topic like GraphRAG is not "better" than 🟢 Beginner Chain of
